@@ -1,17 +1,18 @@
 {
-  "name": "fcc-dv-barchart",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "devDependencies": {
-    "gh-pages": "^5.0.0",
-    "prettier": "^2.8.7",
-    "prettier-plugin-tailwindcss": "^0.2.6",
-    "vite": "^4.2.0"
-  }
+	"name": "fcc-dv-barchart",
+	"homepage": "https://zennithyattare.github.io/fCC_DV_barchart/",
+	"private": true,
+	"version": "0.0.0",
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "vite build",
+		"preview": "vite preview"
+	},
+	"devDependencies": {
+		"gh-pages": "^5.0.0",
+		"prettier": "^2.8.7",
+		"prettier-plugin-tailwindcss": "^0.2.6",
+		"vite": "^4.2.0"
+	}
 }
