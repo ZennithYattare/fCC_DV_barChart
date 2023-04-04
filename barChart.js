@@ -1,8 +1,14 @@
 /** @format */
 
-export function barChart(element) {
+export function barChart() {
 	const width = 800;
 	const height = 400;
+
+	const tooltip = d3
+		.select("#bar-chart")
+		.append("div")
+		.attr("id", "tooltip")
+		.style("opacity", 1);
 
 	const svg = d3
 		.select("#bar-chart")
@@ -10,12 +16,15 @@ export function barChart(element) {
 		.attr("width", width + 80)
 		.attr("height", height + 80);
 
+	let dataArray = [];
 	// display and parse the JSON data from this https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/GDP-data.json
 	fetch(
 		"https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/GDP-data.json"
 	)
 		.then((response) => response.json())
 		.then((data) => {
+			dataArray = data.data;
+			console.log(dataArray);
 			// get the years and parse to Date from the JSON file
 			const years = data.data.map((item) => {
 				return new Date(item[0]);
@@ -77,28 +86,47 @@ export function barChart(element) {
 
 			// append the bars to the svg
 			svg.selectAll("rect")
-				.data(scaledGDP)
+				.data(dataArray)
 				.enter()
 				.append("rect")
 				.attr("data-date", (d, i) => {
-					return data.data[i][0];
+					return dataArray[i][0];
 				})
 				.attr("data-gdp", (d, i) => {
-					return data.data[i][1];
+					return dataArray[i][1];
 				})
 				.attr("class", "bar")
 				.attr("x", function (d, i) {
 					return xScale(years[i]);
 				})
 				.attr("y", function (d) {
-					return height - d;
+					return height - linearScale(d[1]);
 				})
 				.attr("width", width / GDP.length)
 				.attr("height", function (d) {
-					return d;
+					return linearScale(d[1]);
 				})
 				.attr("transform", "translate(60, 0)")
-				.attr("fill", "#55aaaa");
-			// create a functioning tooltip below
+				.attr("fill", "#55aaaa")
+
+				// TODO create a functioning tooltip below
+				.on("mouseover", function (event, d) {
+					console.log(event);
+					console.log(d);
+					tooltip.transition().duration(200).style("opacity", 0.9);
+					tooltip
+						.html(
+							`<p>${d[0]}</p><p>$${d[1].toLocaleString("en")}</p>`
+						)
+						.attr("data-date", d[0])
+						.style("top", height + "px")
+						.style("left", event.pageX + "px");
+				})
+				.on("mouseout", function (d) {
+					tooltip.transition().duration(200).style("opacity", 0);
+				});
 		});
 }
+
+// https://forum.freecodecamp.org/t/how-to-get-data-and-index-in-d3-v6-5-0/445201/2
+// https://stackoverflow.com/questions/15011256/d3-bar-chart-is-upside-down/15012361
