@@ -8,7 +8,7 @@ export function barChart() {
 		.select("#bar-chart")
 		.append("div")
 		.attr("id", "tooltip")
-		.style("opacity", 1);
+		.style("opacity", 0);
 
 	const svg = d3
 		.select("#bar-chart")
