@@ -13,4 +13,3 @@ document.querySelector("#app").innerHTML = `
 `;
 
 barChart(document.querySelector("#bar-chart"));
-// setupCounter(document.querySelector("#counter"));
